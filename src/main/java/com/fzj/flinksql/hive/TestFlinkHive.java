@@ -1,4 +1,4 @@
-package com.fzj.flink.hive;
+package com.fzj.flinksql.hive;
 
 import org.apache.flink.table.api.EnvironmentSettings;
 import org.apache.flink.table.api.Table;
