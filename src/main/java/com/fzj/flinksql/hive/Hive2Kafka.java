@@ -39,17 +39,19 @@ public class Hive2Kafka {
         //先删除表
         tableEnv.executeSql("drop table flink_sink_t");
 
+
         String sql =
                 "CREATE TABLE flink_sink_t (" +
                         "  name String" +
                         ") WITH (" +
                         "  'connector' = 'kafka'," +
                         "  'topic' = 'flink_sink_t'," +
-                        "  'properties.bootstrap.servers' = '120.79.161.133:9092'," +
+                        "  'properties.bootstrap.servers' = '192.168.19.201:9092'," +
                         "  'format' = 'json'" +
                         ")";
         //执行后 hive中 建立 flink_sink_t空表
         tableEnv.executeSql(sql);
+        //并将 sqlResult 指定的数据结果 写入到 Kafka 的 flink_sink_t 主题中
         statementSet.addInsert("flink_sink_t", sqlResult);
         statementSet.execute();
     }

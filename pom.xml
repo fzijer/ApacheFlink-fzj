@@ -180,6 +180,20 @@
             <version>${flink.version}</version>
         </dependency>
 
+
+        <!-- flinksql 读取hive数据 写入Kafka-->
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-json</artifactId>
+            <version>1.11.0</version>
+        </dependency>
+        <!--加入 flink 连接 Kafka的依赖 -->
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-connector-kafka_2.11</artifactId>
+            <version>${flink.version}</version>
+        </dependency>
+
     </dependencies>
     <build>
         <pluginManagement>

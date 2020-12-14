@@ -46,7 +46,7 @@ public class TestFlinkHive {
       //System.out.println(row);
       //System.out.println(row.getKind());  /*输出类型*/
       //System.out.println(row.getArity()); /*输出列的长度*/
-      //System.out.println(row.getField(0));
+      System.out.println(row.getField(0));
     });
 
 
