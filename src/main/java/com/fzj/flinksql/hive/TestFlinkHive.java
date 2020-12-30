@@ -35,7 +35,7 @@ public class TestFlinkHive {
     //得到Table对象
     Table table = tableEnv.sqlQuery(sql);
 
-    tableEnv.insertInto("test.txt",table);
+    //执行execute操作得到table对象中的所有数据
     TableResult execute = table.execute();
     //execute.print();
     System.out.println(execute.getJobClient());
@@ -46,7 +46,7 @@ public class TestFlinkHive {
       //System.out.println(row);
       //System.out.println(row.getKind());  /*输出类型*/
       //System.out.println(row.getArity()); /*输出列的长度*/
-      System.out.println(row.getField(0));
+     // System.out.println(row.getField(0));
     });
 
 

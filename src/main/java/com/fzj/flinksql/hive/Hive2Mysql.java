@@ -14,15 +14,17 @@ public class Hive2Mysql {
 
     public static void main(String[] args) throws Exception {
 
-        EnvironmentSettings settings = EnvironmentSettings
-                .newInstance()
-                .useBlinkPlanner()
-                .inBatchMode()
-                .build();
+        EnvironmentSettings fsSettings = EnvironmentSettings.newInstance().useOldPlanner().inStreamingMode().build();
 
-        TableEnvironment tableEnv = TableEnvironment.create(settings);
+//        EnvironmentSettings settings = EnvironmentSettings
+//                .newInstance()
+//                .useBlinkPlanner()
+//                .inBatchMode()
+//                .build();
+
+        TableEnvironment tableEnv = TableEnvironment.create(fsSettings);
         // Catalog名称，定义一个唯一的名称表示
-        String name = "myhive";
+        String name = "hive";
         // 默认数据库名称
         String defaultDatabase = "default";
         // hive-site.xml路径
@@ -35,18 +37,19 @@ public class Hive2Mysql {
         tableEnv.useCatalog(name);
 
         Table sqlResult = tableEnv.sqlQuery("select name from t");
-
-
+        //先删除表
+        tableEnv.executeSql("drop table testOut4");
+        System.out.println("23");
         String sql =
-                "create table testOut ( " +
+                "create table testOut4 ( " +
                         "name varchar(20) not null "+
                         ") with ( "+
                         "'connector.type' = 'jdbc',"+
-                        "'connector.url' = 'jdbc:mysql://120.79.161.133:3306/test?characterEncoding=UTF-8',"+
-                        "'connector.table' = 'test_stu',"+
+                        "'connector.url' = 'jdbc:mysql://192.168.18.158:3306/test?characterEncoding=UTF-8',"+
+                        "'connector.table' = 't',"+
                         "'connector.driver' = 'com.mysql.jdbc.Driver',"+
                         "'connector.username' = 'root',"+
-                        "'connector.password' = 'xwj$wsd98')";
+                        "'connector.password' = 'root')";
         tableEnv.executeSql(sql);
         statementSet.addInsert("testOut",sqlResult);
 

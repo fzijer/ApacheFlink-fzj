@@ -5,6 +5,10 @@ import org.apache.flink.table.api.StatementSet;
 import org.apache.flink.table.api.Table;
 import org.apache.flink.table.api.TableEnvironment;
 import org.apache.flink.table.catalog.hive.HiveCatalog;
+import org.apache.flink.table.functions.ScalarFunction;
+
+import static jdk.nashorn.internal.objects.NativeFunction.call;
+import static org.apache.flink.table.api.Expressions.$;
 
 
 /**
@@ -30,14 +34,26 @@ public class Hive2Kafka {
         String hiveConfDir = "src\\main\\resources";
 
         HiveCatalog hive = new HiveCatalog(name, defaultDatabase, hiveConfDir);
+        //根据TableEnvironment 对象得到 StatementSet 对象
         StatementSet statementSet = tableEnv.createStatementSet();
 
         tableEnv.registerCatalog(name, hive);
         tableEnv.useCatalog(name);
         Table sqlResult = tableEnv.sqlQuery("select name from t");
 
+        //sqlQuery 和 executeSql  的作用和差别
         //先删除表
         tableEnv.executeSql("drop table flink_sink_t");
+
+        /**测试map代码*/
+
+//        ScalarFunction func = new MyMapFunction();
+//        tableEnv.registerFunction("func", func);
+//
+//        Table table = sqlResult
+//                .map(call("func", $("c")).as("a", "b"));
+
+        /**测试map代码*/
 
 
         String sql =
